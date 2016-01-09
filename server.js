@@ -95,7 +95,7 @@ function answer(res, text){
 	message.push('<?xml version="1.0" encoding="UTF-8" ?>');
 	message.push('<Response>');
 	if (text) {
-		message.push('<Say voice="woman" language="de">'+text+'</Say>');
+		message.push('<Say voice="woman" language="de">'+fixstring(text)+'</Say>');
 	} else {
 		message.push('<Say voice="woman" language="de">Willkommen beim Aufzugsservice für Bahnhöfe der Deutschen Bahn.</Say>');
 	}
