@@ -94,10 +94,18 @@ function answer(res, text){
 	var message = [];
 	message.push('<?xml version="1.0" encoding="UTF-8" ?>');
 	message.push('<Response>');
-	message.push('<Say voice="woman" language="de">'+text+'</Say>');		
+	if (text) {
+		message.push('<Say voice="woman" language="de">'+text+'</Say>');
+	} else {
+		message.push('<Say voice="woman" language="de">Willkommen beim Aufzugsservice für Bahnhöfe der Deutschen Bahn.</Say>');
+	}
 	message.push('<Pause length="1"/>');
 	message.push('<Gather action="https://liftphone.dsst.io/" method="post" numDigits="8">');
-	message.push('<Say voice="woman" language="de">Wenn Sie einen weiteren Aufzug abfragen möchten, geben Sie bitte die Achtstellige Aufzugnummer ein.</Say>');
+	if (text) {
+		message.push('<Say voice="woman" language="de">Wenn Sie einen weiteren Aufzug abfragen möchten, geben Sie bitte die Achtstellige Aufzugnummer ein.</Say>');
+	} else {
+		message.push('<Say voice="woman" language="de">Bitte geben Sie die Achtstellige Aufzugnummer ein.</Say>');
+	}
 	message.push('</Gather>');
 	message.push('<Say voice="woman" language="de">Auf wiederhören.</Say>');
 	message.push('</Response>');
@@ -107,15 +115,11 @@ function answer(res, text){
 };
 
 // default twiml
-app.get("/", function(req, res){
-	res.send('<?xml version="1.0" encoding="UTF-8" ?>\n<Response>\n\t<Gather action="https://liftphone.dsst.io/" method="post" numDigits="8">\n\t\t<Say voice="woman" language="de">Bitte geben Sie die Achtstellige Aufzugnummer ein.</Say>\n\t</Gather>\n\t<Say voice="woman" language="de">Auf wiederhören.</Say>\n</Response>');
-});
-
-app.post("/", function(req, res){
+app.all("/", function(req, res){
 	var id = null;
 	if (req.params.hasOwnProperty("Digits")) id = req.params.Digits;
 	else if (req.body.hasOwnProperty("Digits")) id = req.body.Digits;
-	if (!id) return answer(res, "Es wurde leider keine Aufzugnummer eingegeben.");
+	if (!id) return answer(res, null);
 	
 	resolve(id, function(err, data){
 		if (err) return answer(res, err);
