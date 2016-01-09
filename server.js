@@ -97,7 +97,7 @@ function answer(res, text){
 	if (text) {
 		message.push('<Say voice="woman" language="de">'+fixstring(text)+'</Say>');
 	} else {
-		message.push('<Say voice="woman" language="de">Willkommen beim Aufzugsservice für Bahnhöfe der Deutschen Bahn.</Say>');
+		message.push('<Say voice="woman" language="de">Willkommen beim Aufzugs Service für Bahnhöfe der Deutschen Bahn.</Say>');
 	}
 	message.push('<Pause length="1"/>');
 	message.push('<Gather action="https://liftphone.dsst.io/" method="post" numDigits="8">');
