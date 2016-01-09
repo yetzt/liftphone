@@ -1,0 +1,7 @@
+module.exports = {
+	// listen on a socket
+	//	socket: "liftstream.sock",
+	// or listen on host and port instead
+	host: "localhost",
+	port: 3000
+};
